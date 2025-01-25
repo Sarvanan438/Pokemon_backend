@@ -7,7 +7,6 @@ const initializeDataSource = async () => {
       return AppDataSource;
     }
     const result = await AppDataSource.initialize();
-    console.log("Data source initialized");
     return result;
   } catch (error) {
     console.error(error);

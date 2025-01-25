@@ -1,7 +1,5 @@
-import { NextFunction, Request, Response } from "express";
-import AuthService, {
-  AuthServiceInstance,
-} from "../../application/services/Auth.service";
+import { AuthService, AuthServiceInstance } from "../../application/services";
+import { ExpressApiHandlerType } from "../../../shared/types";
 class AuthControllers {
   private static instance: AuthControllers;
 
@@ -14,19 +12,19 @@ class AuthControllers {
     return AuthControllers.instance;
   }
 
-  public async login(req: Request, res: Response): Promise<void> {
-    const token = await this.authService.login(
-      req.body.username,
-      req.body.password
-    );
-    res.status(200).send({ message: "login", token });
-  }
+  public login: ExpressApiHandlerType = async (req, res, next) => {
+    try {
+      const token = await this.authService.login(
+        req.body.username,
+        req.body.password
+      );
+      res.status(200).send({ message: "login", token });
+    } catch (e) {
+      next(e);
+    }
+  };
 
-  public register = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> => {
+  public register: ExpressApiHandlerType = async (req, res, next) => {
     try {
       await this.authService.register(
         req.body.username,
@@ -39,10 +37,24 @@ class AuthControllers {
     }
   };
 
-  public async logout(req: Request, res: Response): Promise<void> {
-    await this.authService.logout(req.body.token);
-    res.status(200).send({ message: "logout successful" });
-  }
+  public logout: ExpressApiHandlerType = async (req, res, next) => {
+    try {
+      await this.authService.logout(req.body.token);
+      res.status(200).send({ message: "logout successful" });
+    } catch (e) {
+      next(e);
+    }
+  };
+
+  public getUsers: ExpressApiHandlerType = async (req, res, next) => {
+    try {
+      const users = await this.authService.getUsers();
+      console.log(users);
+      res.status(200).json({ message: "success", users });
+    } catch (e) {
+      next(e);
+    }
+  };
 }
 
 export default AuthControllers.getInstance();
