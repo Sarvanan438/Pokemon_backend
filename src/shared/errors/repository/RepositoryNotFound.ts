@@ -1,5 +1,5 @@
-import CustomError from "../../../../shared/errors/CustomError";
 import { REPOSITORY_NOT_FOUND } from "../../constants/errors";
+import CustomError from "../CustomError";
 
 export default class RepositoryNotFound extends CustomError {
   constructor(msg = "Repository not found ") {

@@ -1,4 +1,4 @@
-import RepositoryNotFound from "../../domain/errors/repository/RepositoryNotFound";
+import { RepositoryNotFound } from "../../domain/errors";
 import { RepositoriesType } from "../types";
 
 export default class RepositoryRegistry {

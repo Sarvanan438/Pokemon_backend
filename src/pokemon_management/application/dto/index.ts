@@ -1,0 +1,1 @@
+export { PokemonDTO } from "./PokemonDTO";

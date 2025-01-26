@@ -9,10 +9,12 @@ import "reflect-metadata";
 import errorHandler from "./shared/utility/ErrorHandler/ErrorHandler";
 import registerUsermanagementRepositories from "./user_management/infrastructure/registerRepositories";
 import { DataSource } from "typeorm";
+import registerPokemonRepositories from "./pokemon_management/registerPokemonRepositories";
 const app = express();
 const PORT = process.env.PORT || 3000;
 const registerRepositories = (dataSource: DataSource) => {
   registerUsermanagementRepositories(dataSource);
+  registerPokemonRepositories();
 };
 // Middleware
 app.use(cors());
